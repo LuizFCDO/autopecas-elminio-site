@@ -73,6 +73,7 @@ def get_carrinho(request):
     return carrinho
 
 def adicionar_ao_carrinho(request, peca_id):
+    quantidade_recebida = int(request.POST.get('quantidade', 1))
     peca = get_object_or_404(Peca, id=peca_id)
     carrinho = get_carrinho(request)
     
@@ -80,12 +81,12 @@ def adicionar_ao_carrinho(request, peca_id):
     item, created = ItemCarrinho.objects.get_or_create(
         carrinho=carrinho,
         peca=peca,
-        defaults={'quantidade': 1}
+        defaults={'quantidade': quantidade_recebida}
     )
     
     # Se o item já existir, incrementa a quantidade
     if not created:
-        item.quantidade += 1
+        item.quantidade += quantidade_recebida
         item.save()
     
     messages.success(request, f'{peca.nome} adicionado ao carrinho!')

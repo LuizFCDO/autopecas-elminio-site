@@ -9,13 +9,18 @@ function initPaginaProduto() {
     // Controle de quantidade no formulário principal
     const quantidadeInput = document.querySelector('input[name="quantidade"]');
     if (quantidadeInput && !quantidadeInput.closest('.quantidade-controls')) {
+        // Salva o elemento pai
+        const parentElement = quantidadeInput.parentNode;
+        
         // Cria container para os controles
         const controlsContainer = document.createElement('div');
         controlsContainer.className = 'quantidade-controls';
         
-        // Clona o input para manter suas propriedades
-        const novoInput = quantidadeInput.cloneNode(true);
-        novoInput.classList.remove('form-control');
+        // Remove o input do DOM temporariamente
+        quantidadeInput.remove();
+        
+        // Remove classes do input
+        quantidadeInput.classList.remove('form-control');
         
         // Botão menos
         const btnMenos = document.createElement('button');
@@ -24,9 +29,9 @@ function initPaginaProduto() {
         btnMenos.innerHTML = '−';
         btnMenos.title = 'Diminuir quantidade';
         btnMenos.addEventListener('click', function() {
-            const currentValue = parseInt(novoInput.value);
+            const currentValue = parseInt(quantidadeInput.value);
             if (currentValue > 1) {
-                novoInput.value = currentValue - 1;
+                quantidadeInput.value = currentValue - 1;
             }
         });
 
@@ -37,25 +42,20 @@ function initPaginaProduto() {
         btnMais.innerHTML = '+';
         btnMais.title = 'Aumentar quantidade';
         btnMais.addEventListener('click', function() {
-            const currentValue = parseInt(novoInput.value);
-            const max = parseInt(novoInput.getAttribute('max')) || 999;
+            const currentValue = parseInt(quantidadeInput.value);
+            const max = parseInt(quantidadeInput.getAttribute('max')) || 999;
             if (currentValue < max) {
-                novoInput.value = currentValue + 1;
+                quantidadeInput.value = currentValue + 1;
             }
         });
         
-        // Garante que o novo input tenha o mesmo name
-        novoInput.name = 'quantidade';
-        novoInput.id = quantidadeInput.id;
-
         // Monta a estrutura
         controlsContainer.appendChild(btnMenos);
-        controlsContainer.appendChild(novoInput);
+        controlsContainer.appendChild(quantidadeInput);
         controlsContainer.appendChild(btnMais);
-
-        // Substitui o input original pelo container
-        quantidadeInput.parentNode.replaceChild(controlsContainer, quantidadeInput);
-
+        
+        // Adiciona o container ao pai
+        parentElement.appendChild(controlsContainer);
     }
 }
 
