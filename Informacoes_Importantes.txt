@@ -1,1 +1,6 @@
 super user = LuizAdm / senha = 852046
+
+Banco de Dados = postgreSQL
+usuario = postgres
+senha = 990831@_L17
+port = 5432
