@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block title %}Home - Elmínio{% endblock %}
+
+{% block content %}
+<div class="jumbotron bg-light p-5 rounded">
+    <h1 class="display-4">Bem-vindo a <span class="text-secondary">Autopeças Elmínio</span>!</h1>
+    <p class="lead" style="font-size: 2rem;">O shopping dos pesados!</p>
+    <hr class="my-4">
+    <p>Desde 1983 no mercado, a Autopeças Elmínio é referência em autopeças para a linha pesada. Especializada em peças de reposição para Caminhões: Scania, Volvo, Mercedes-Benz, Volkswagen, Iveco, Ford, Sinotruck, MAN, DAF, Agrale e Carretas em geral.</p>
+    <p>Possuímos um catálogo completo, contando com inúmeras marcas como: Suporte Rei, Spaal Juntas, Dynamic Retentores, Stahl, Rei Autoparts, Cipec, Quinelato, Arca e diversas outras.</p>
+    <p>De miudezas a peças pesadas – temos tudo!</p>
+    <div class="mt-4">
+        <a class="btn btn-primary btn-lg me-2" href="{% url 'catalogo' %}" role="button">
+            <i class="fa-solid fa-book"></i> Ver Catálogo
+        </a>
+    </div>
+</div>
+
+<div class="row mt-5">
+    <div class="col-md-4">
+        <div class="card mb-4">
+            <div class="card-body text-center">
+                <i class="fa-solid fa-book fa-3x mb-3 text-primary"></i>
+                <h3 class="card-title">Catálogo completo de peças para pesados</h3>
+                <p class="card-text">Motores, suspensão, freios, embreagem, elétrica e muito mais.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card mb-4">
+            <div class="card-body text-center">
+                <i class="fa-solid fa-truck fa-3x mb-3 text-primary"></i>
+                <h3 class="card-title">Especializados em Caminhões</h3>
+                <br>
+                <p class="card-text" style="padding-top:0.5rem;">Mais de 40 anos de experiência oferecendo peças de alta durabilidade para caminhões e veículos pesados.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card mb-4">
+            <div class="card-body text-center">
+                <i class="fa-solid fa-cash-register fa-3x mb-3 text-primary"></i>
+                <h3 class="card-title">Orçamento rápido e sem compromisso</h3>
+                <p class="card-text">Fale com nosso time via WhatsApp e receba um orçamento na hora.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-body">
+        <h2 class="card-title">Onde Estamos</h2>
+        <p class="card-text">
+            R. K, 960 - Vila Sofia, Jataí - GO.
+        </p>
+    </div>
+</div>
+
+<div class="mt-5">
+    <div class="card">
+        <div class="card-body p-0 text-center">
+            <div class="map-container">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d60740.61146343034!2d-51.8038498!3d-17.9187062!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x93626daa4f43d0b7%3A0xfd6e25f6a59484b8!2sElm%C3%ADnio%20Shopping%20Dos%20Pesados!5e0!3m2!1spt-BR!2sbr!4v1748266102877!5m2!1spt-BR!2sbr" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[cod]
+*.sqlite3
+*.log
+
+# Django
+*.db
+media/
+staticfiles/
+
+# Ambiente virtual
+venv/
+
+# VSCode
+.vscode/
+
+# Sistema
+.DS_Store
+Thumbs.db
+
+# Arquivos pessoais
+Informacoes_Importantes.txt

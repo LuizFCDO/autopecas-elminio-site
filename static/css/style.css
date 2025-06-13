@@ -1,0 +1,518 @@
+/* Variáveis de Cores */
+:root {
+    --primary-color: #0a2463; /* Azul escuro */
+    --secondary-color: #e63946; /* Vermelho */
+    --light-color: #ffffff; /* Branco */
+    --dark-color: #1a1a2e; /* Azul mais escuro para textos */
+    --gray-color: #f8f9fa; /* Cinza claro para fundos */
+    --hover-primary: #051c4e; /* Azul escuro para hover */
+    --hover-secondary: #c1121f; /* Vermelho mais escuro para hover */
+}
+
+/* Fix para viewport mobile */
+* {
+    box-sizing: border-box;
+}
+
+html {
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+}
+
+body {
+    min-width: 320px;
+    overflow-x: hidden;
+}
+
+/* Estilos Gerais */
+body {
+    font-family: 'Roboto', sans-serif;
+    color: var(--dark-color);
+    line-height: 1.6;
+    background-color: var(--light-color);
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+}
+
+a {
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: var(--hover-primary);
+    text-decoration: underline;
+}
+
+/* Navbar */
+.navbar {
+    background-color: var(--primary-color) !important;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.navbar-brand {
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: var(--light-color) !important;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+    color: var(--light-color) !important;
+    font-weight: 500;
+}
+
+.navbar-dark .navbar-nav .nav-link:hover {
+    color: rgba(255, 255, 255, 0.8) !important;
+}
+
+.navbar-logo {
+    display: inline-block;
+    width: 45px;
+    height: 45px;
+    background-image: url('../img/logo_fbranco_circular.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    vertical-align: middle;
+}
+
+/* Cards */
+.card {
+    border: none;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin-bottom: 1.5rem;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+    background-color: var(--primary-color);
+    color: var(--light-color);
+    font-weight: 600;
+}
+
+.card-title {
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+/* Jumbotron */
+.jumbotron {
+    background-color: var(--gray-color);
+    padding: 4rem 2rem;
+    margin-bottom: 2rem;
+    border-radius: 0.5rem;
+    border-left: 5px solid var(--primary-color);
+}
+
+/* Footer */
+footer {
+    background-color: var(--primary-color) !important;
+    margin-top: 3rem;
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+    color: var(--light-color);
+}
+
+footer a {
+    color: var(--light-color);
+}
+
+footer a:hover {
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: underline;
+}
+
+footer h5 {
+    color: var(--light-color);
+    border-bottom: 2px solid var(--secondary-color);
+    padding-bottom: 0.5rem;
+    display: inline-block;
+}
+
+/* Alinhamento dos números de telefone no footer */
+.phone-numbers {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+}
+
+.phone-numbers .phone-icon {
+    margin-right: 0.5rem;
+}
+
+.phone-numbers .phone-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 0.25rem;
+}
+
+/* Botões */
+.btn {
+    border-radius: 0.25rem;
+    padding: 0.5rem 1.5rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: var(--light-color);
+}
+
+.btn-primary:hover {
+    background-color: var(--hover-primary);
+    border-color: var(--hover-primary);
+}
+
+.btn-secondary {
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
+    color: var(--light-color);
+}
+
+.btn-secondary:hover {
+    background-color: var(--hover-secondary);
+    border-color: var(--hover-secondary);
+}
+
+/* Formulários */
+.form-control {
+    border-radius: 0.25rem;
+    padding: 0.75rem;
+    border: 1px solid #ced4da;
+}
+
+.form-control:focus {
+    box-shadow: 0 0 0 0.25rem rgba(10, 36, 99, 0.25);
+    border-color: var(--primary-color);
+}
+
+/* Badges */
+.badge {
+    font-weight: 500;
+    padding: 0.5em 1em;
+}
+
+.badge-primary {
+    background-color: var(--primary-color);
+}
+
+.badge-secondary {
+    background-color: var(--secondary-color);
+}
+
+/* Página Home */
+.feature-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+}
+
+.card-body i {
+    color: var(--primary-color);
+}
+
+/* Mapa responsivo */
+.map-container {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 37.5%; /* Proporção 16:6 (450/1200 = 0.375) */
+    overflow: hidden;
+}
+
+.map-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    height: 100% !important;
+    border: 0;
+}
+
+/* Ajustes específicos para diferentes tamanhos de tela */
+@media (max-width: 768px) {
+    .map-container {
+        padding-bottom: 56.25%; /* Proporção 16:9 para mobile */
+        height: 300px; /* Altura fixa menor para mobile */
+        padding-bottom: 0; /* Remove o padding-bottom quando há altura fixa */
+    }
+}
+
+@media (max-width: 480px) {
+    .map-container {
+        height: 250px; /* Ainda menor para telas muito pequenas */
+    }
+}
+
+/* Página Blog */
+.blog-post {
+    margin-bottom: 2rem;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 2rem;
+}
+
+.blog-post-title {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    color: var(--primary-color);
+}
+
+.blog-post-meta {
+    margin-bottom: 1.25rem;
+    color: #6c757d;
+}
+
+/* Página Sobre */
+.team-member {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.team-member img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 1rem;
+    border: 3px solid var(--primary-color);
+}
+
+.team-member h5 {
+    color: var(--primary-color);
+}
+
+.team-member p {
+    color: var(--secondary-color);
+    font-weight: 500;
+}
+
+/* Página Contato */
+.contact-info i {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+}
+
+/* Alertas */
+.alert-success {
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+    color: #155724;
+}
+
+.alert-danger {
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+    color: #721c24;
+}
+
+/* Elementos de destaque */
+.highlight {
+    color: var(--secondary-color);
+    font-weight: 700;
+}
+
+.border-primary {
+    border-color: var(--primary-color) !important;
+}
+
+.border-secondary {
+    border-color: var(--secondary-color) !important;
+}
+
+.text-primary {
+    color: var(--primary-color) !important;
+}
+
+.text-secondary {
+    color: var(--secondary-color) !important;
+}
+
+.bg-primary {
+    background-color: var(--primary-color) !important;
+}
+
+.bg-secondary {
+    background-color: var(--secondary-color) !important;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .jumbotron {
+        padding: 2rem 1rem;
+    }
+    
+    h1 {
+        font-size: 2rem;
+    }
+    
+    .navbar-brand {
+        font-size: 1.25rem;
+    }
+}
+
+/* Botão flutuante do WhatsApp */
+.whatsapp-float {
+    position: fixed;
+    width: 60px;
+    height: 60px;
+    bottom: 20px;
+    right: 20px;
+    background-color: #25d366;
+    color: white;
+    border-radius: 50px;
+    text-align: center;
+    font-size: 30px;
+    box-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+    z-index: 1000;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
+
+.whatsapp-float:hover {
+    background-color: #128c7e;
+    color: white;
+    transform: scale(1.1);
+    box-shadow: 2px 2px 15px rgba(0,0,0,0.4);
+    text-decoration: none;
+}
+
+.whatsapp-float i {
+    margin-top: 2px;
+}
+
+/* Animação de pulso para WhatsApp */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.whatsapp-float.pulse {
+    animation: pulse 2s infinite;
+}
+
+/* Responsivo para WhatsApp em telas menores */
+@media (max-width: 768px) {
+    .whatsapp-float {
+        width: 50px;
+        height: 50px;
+        font-size: 25px;
+        bottom: 15px;
+        right: 15px;
+    }
+}
+
+/* Forçar toasts a ficarem flutuantes no mobile */
+@media (max-width: 768px) {
+    .toast-container {
+        position: fixed !important;
+        top: 70px !important;
+        right: 15px !important;
+        left: 15px !important;
+        z-index: 1055 !important;
+        width: auto !important;
+    }
+    
+    .toast {
+        width: 100% !important;
+        max-width: none !important;
+    }
+    
+    /* Esconder alerts normais no mobile */
+    .alert:not(.toast) {
+        display: none !important;
+    }
+}
+
+/* Botões de quantidade +/- */
+.quantidade-controls {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    overflow: hidden;
+    background-color: white;
+    width: 100%;
+    max-width: 200px;
+}
+
+.quantidade-controls .btn-quantidade {
+    border: none;
+    border-radius: 0;
+    padding: 0.5rem 0.75rem;
+    font-weight: 600;
+    font-size: 1.1rem;
+    line-height: 1;
+    background-color: var(--gray-color);
+    color: var(--primary-color);
+    transition: all 0.2s ease;
+    min-width: 40px;
+}
+
+.quantidade-controls .btn-quantidade:hover {
+    background-color: var(--primary-color);
+    color: var(--light-color);
+}
+
+.quantidade-controls .btn-quantidade:active {
+    transform: scale(0.95);
+}
+
+.quantidade-controls input[type="number"] {
+    border: none;
+    text-align: center;
+    font-weight: 600;
+    padding: 0.5rem;
+    min-width: 60px;
+    background-color: white;
+}
+
+.quantidade-controls input[type="number"]:focus {
+    box-shadow: none;
+    outline: none;
+}
+
+/* Responsivo para mobile */
+@media (max-width: 768px) {
+    .quantidade-controls {
+        max-width: 150px;
+    }
+    
+    .quantidade-controls .btn-quantidade {
+        min-width: 40px;
+        padding: 0.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .quantidade-controls input[type="number"] {
+        min-width: 50px;
+        padding: 0.5rem 0.3rem;
+    }
+}
+

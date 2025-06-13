@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+
+{% block title %}Pedido Confirmado - Elmínio{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header bg-success text-white text-center">
+                <h3 class="mb-0">
+                    <i class="fas fa-check-circle me-2"></i>
+                    Pedido Confirmado!
+                </h3>
+            </div>
+            <div class="card-body text-center">
+                <h5>Pedido #{{ pedido.id }}</h5>
+                <p class="text-muted">Realizado em {{ pedido.criado_em|date:"d/m/Y às H:i" }}</p>
+                
+                <div class="alert alert-info">
+                    <i class="fab fa-whatsapp me-2"></i>
+                    <strong>Próximo passo:</strong> Sua mensagem foi preparada para o WhatsApp! 
+                    Clique no botão abaixo para enviar seu orçamento.
+                </div>
+                
+                <div class="d-grid gap-2 mb-4">
+                    <a href="{{ whatsapp_url }}" target="_blank" class="btn btn-success btn-lg">
+                        <i class="fab fa-whatsapp me-2"></i>
+                        Enviar Orçamento via WhatsApp
+                    </a>
+                    <button type="button" class="btn btn-outline-success" onclick="copiarMensagem()">
+                        <i class="fas fa-copy me-2"></i>
+                        Copiar Mensagem (Plano B)
+                    </button>
+                </div>
+
+                <!-- Textarea oculto para copiar -->
+                <textarea id="mensagemTexto" style="position: absolute; left: -9999px;">{{ mensagem_whatsapp }}</textarea>
+
+                
+                <div class="row">
+                    <div class="col-md-6">
+                        <a href="{% url 'catalogo' %}" class="btn btn-primary w-100">
+                            <i class="fas fa-shopping-bag me-2"></i>
+                            Continuar Comprando
+                        </a>
+                    </div>
+                    <div class="col-md-6">
+                        <a href="{% url 'home' %}" class="btn btn-outline-primary w-100">
+                            <i class="fas fa-home me-2"></i>
+                            Voltar ao Início
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Abre WhatsApp automaticamente após 2 segundos
+setTimeout(function() {
+    if ('{{ whatsapp_url }}') {
+        window.open('{{ whatsapp_url }}', '_blank');
+    }
+}, 2000);
+
+// Função para copiar mensagem
+function copiarMensagem() {
+    const textarea = document.getElementById('mensagemTexto');
+    textarea.select();
+    textarea.setSelectionRange(0, 99999); // Para mobile
+    
+    try {
+        document.execCommand('copy');
+        
+        // Feedback visual
+        const botao = event.target.closest('button');
+        const textoOriginal = botao.innerHTML;
+        botao.innerHTML = '<i class="fas fa-check me-2"></i>Mensagem Copiada!';
+        botao.classList.remove('btn-outline-success');
+        botao.classList.add('btn-success');
+        
+        // Volta ao normal após 3 segundos
+        setTimeout(() => {
+            botao.innerHTML = textoOriginal;
+            botao.classList.remove('btn-success');
+            botao.classList.add('btn-outline-success');
+        }, 3000);
+        
+    } catch (err) {
+        alert('Não foi possível copiar automaticamente. Por favor, copie manualmente.');
+    }
+}
+</script>
+
+{% endblock %}

@@ -1,0 +1,164 @@
+{% extends 'base.html' %}
+
+{% block title %}Catálogo de Peças - Meu Site{% endblock %}
+
+{% block content %}
+<div class="row">
+    <!-- Sidebar com categorias -->
+    <div class="col-lg-3 mb-4">
+        <div class="card mt-4">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0" style="color: white;">Buscar Peças</h5>
+            </div>
+            <div class="card-body">
+                <form method="get" action="{% url 'catalogo' %}">
+                    <div class="input-group">
+                        <input type="text" name="q" class="form-control" placeholder="Nome ou código" value="{{ request.GET.q }}">
+                        <button class="btn btn-primary" type="submit">
+                            <i class="fas fa-search" style="color: white !important;"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0" style="color: white;">Categorias</h5>
+            </div>
+            <div class="list-group list-group-flush">
+                <a href="{% url 'catalogo' %}" class="list-group-item list-group-item-action {% if not categoria_atual %}active{% endif %}">
+                    Todas as Peças
+                </a>
+                {% for categoria in categorias %}
+                <a href="{% url 'catalogo_categoria' categoria.slug %}" class="list-group-item list-group-item-action {% if categoria_atual.id == categoria.id %}active{% endif %}">
+                    {{ categoria.nome }}
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    
+    <!-- Listagem de peças -->
+    <div class="col-lg-9">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1>
+                {% if categoria_atual %}
+                    Peças - {{ categoria_atual.nome }}
+                {% else %}
+                    Catálogo de Peças
+                {% endif %}
+            </h1>
+            
+            {% if request.GET.q %}
+            <div>
+                <span class="badge bg-secondary">Busca: {{ request.GET.q }}</span>
+                <a href="{% url 'catalogo' %}" class="btn btn-sm btn-outline-secondary ms-2">Limpar</a>
+            </div>
+            {% endif %}
+        </div>
+        
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+        
+        {% if pecas %}
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                {% for peca in pecas %}
+                <div class="col">
+                    <div class="card h-100">
+                        <a href="{% url 'peca_detalhe' peca.slug %}" class="text-decoration-none text-dark">
+                            {% if peca.imagem %}
+                                <img src="{{ peca.imagem.url }}" class="card-img-top" alt="{{ peca.nome }}" style="height: 200px; object-fit: contain; padding: 15px;">
+                            {% else %}
+                                <div class="text-center p-4 bg-light">
+                                    <i class="fas fa-tools fa-5x text-secondary"></i>
+                                </div>
+                            {% endif %}
+                            
+                            <div class="card-body">
+                                <h5 class="card-title">{{ peca.nome }}</h5>
+                                <p class="card-text text-muted small">Código: {{ peca.codigo }}</p>
+                                {% if peca.codigos_alternativos %}
+                                    <p class="card-text text-muted small">Códigos Alternativos: {{ peca.codigos_alternativos }}</p>
+                                {% else %}
+                                    <p class="card-text text-muted small">Códigos Alternativos: Não informado</p>
+                                {% endif %}
+                                <p class="card-text">{{ peca.descricao|truncatewords:15 }}</p>
+                            </div>
+                            
+                            <div class="card-footer bg-white">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h5 class="text-primary mb-0">R$ {{ peca.preco|floatformat:2 }}</h5>
+                                        <small class="text-muted">ou 3x de R$ {{ peca.preco_parcelado|floatformat:2 }}</small>
+                                    </div>
+                                    <div>
+                                        <a href="{{ peca.get_absolute_url }}" class="btn btn-sm btn-outline-primary">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                        <button class="btn btn-sm btn-primary adicionar-carrinho" data-id="{{ peca.id }}">
+                                            <i class="fas fa-cart-plus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            
+            <!-- Paginação -->
+            {% if is_paginated %}
+            <nav class="mt-4">
+                <ul class="pagination justify-content-center">
+                    {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page=1{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">
+                            <i class="fas fa-angle-double-left"></i>
+                        </a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">
+                            <i class="fas fa-angle-left"></i>
+                        </a>
+                    </li>
+                    {% endif %}
+                    
+                    <li class="page-item disabled">
+                        <span class="page-link">Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</span>
+                    </li>
+                    
+                    {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">
+                            <i class="fas fa-angle-right"></i>
+                        </a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">
+                            <i class="fas fa-angle-double-right"></i>
+                        </a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </nav>
+            {% endif %}
+            
+        {% else %}
+            <div class="alert alert-info">
+                <i class="fas fa-info-circle me-2"></i>
+                Nenhuma peça encontrada.
+                {% if request.GET.q %}
+                    <a href="{% url 'catalogo' %}" class="alert-link">Limpar busca</a>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

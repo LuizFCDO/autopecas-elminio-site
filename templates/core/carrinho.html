@@ -1,0 +1,150 @@
+{% extends 'base.html' %}
+{% load custom_filters %}
+
+{% block title %}Carrinho de Compras - Meu Site{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Carrinho de Compras</h1>
+
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endfor %}
+{% endif %}
+
+{% if carrinho.itens.all %}
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="card mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0" style="color: white">Itens no Carrinho</h5>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th scope="col" width="100">Imagem</th>
+                                    <th scope="col">Produto</th>
+                                    <th scope="col" class="text-center">Preço</th>
+                                    <th scope="col" class="text-center">Quantidade</th>
+                                    <th scope="col" class="text-center">Subtotal</th>
+                                    <th scope="col" class="text-center">Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in carrinho.itens.all %}
+                                <tr>
+                                    <td>
+                                        {% if item.peca.imagem %}
+                                            <img src="{{ item.peca.imagem.url }}" alt="{{ item.peca.nome }}" class="img-thumbnail" style="max-width: 80px; max-height: 80px;">
+                                        {% else %}
+                                            <div class="text-center p-2 bg-light" style="width: 80px; height: 80px;">
+                                                <i class="fas fa-tools fa-2x text-secondary" style="margin-top: 15px;"></i>
+                                            </div>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <a href="{{ item.peca.get_absolute_url }}" class="text-decoration-none">
+                                            <h6 class="mb-0">{{ item.peca.nome }}</h6>
+                                        </a>
+                                        <small class="text-muted">Código: {{ item.peca.codigo }}</small>
+                                    </td>
+                                    <td class="text-center align-middle">R$ {{ item.peca.preco|floatformat:2 }}</td>
+                                    <td class="text-center align-middle">
+                                        <form method="post" action="{% url 'atualizar_carrinho' item.id %}" class="d-inline">
+                                            {% csrf_token %}
+                                            <div class="input-group input-group-sm" style="width: 100px; margin: 0 auto;">
+                                                <button class="btn btn-outline-secondary" type="button" data-action="decrement">-</button>
+                                                <input type="number" name="quantidade" class="form-control text-center" value="{{ item.quantidade }}" min="1">
+                                                <button class="btn btn-outline-secondary" type="button" data-action="increment">+</button>
+                                            </div>
+                                            <button type="submit" class="btn btn-sm btn-outline-primary mt-1">Atualizar</button>
+                                        </form>
+                                    </td>
+                                    <td class="text-center align-middle fw-bold">R$ {{ item.subtotal|floatformat:2 }}</td>
+                                    <td class="text-center align-middle">
+                                        <a href="{% url 'remover_do_carrinho' item.id %}" class="btn btn-sm btn-danger" onclick="return confirm('Tem certeza que deseja remover este item?')">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="d-flex justify-content-between">
+                        <a href="{% url 'catalogo' %}" class="btn btn-outline-primary">
+                            <i class="fas fa-arrow-left me-2"></i>Continuar Comprando
+                        </a>
+                        <a href="{% url 'checkout' %}" class="btn btn-primary">
+                            Enviar Pedido<i class="fas fa-arrow-right ms-2"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0" style="color: white">Orçamento Preliminar (Negociável)</h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Subtotal:</span>
+                        <span>R$ {{ carrinho.total|floatformat:2 }}</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Frete:</span>
+                        <span>Grátis</span>
+                    </div>
+                    <hr>
+                    <div class="d-flex justify-content-between mb-2 fw-bold">
+                        <span>Total:</span>
+                        <span class="text-primary">R$ {{ carrinho.total|floatformat:2 }}</span>
+                    </div>
+                    <div class="text-muted small mb-3">
+                        ou em até 3x de R$ {{ carrinho.total|divided_by:3|floatformat:2 }} sem juros
+                    </div>
+                    <div class="d-grid gap-2">
+                        <a href="{% url 'checkout' %}" class="btn btn-primary btn-lg">
+                            <i class="fas fa-shopping-bag me-2" style="color: white"></i>Enviar Pedido
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card mt-3">
+                <div class="card-body">
+                    <h5 class="card-title">Formas de Pagamento</h5>
+                    <div class="d-flex flex-wrap gap-2 mt-3">
+                        <i class="fab fa-cc-visa fa-2x text-primary"></i>
+                        <i class="fab fa-cc-mastercard fa-2x text-primary"></i>
+                        <i class="fab fa-cc-amex fa-2x text-primary"></i>
+                        <i class="fab fa-pix fa-2x text-primary"></i>
+                        <i class="fas fa-money-bill-wave fa-2x text-primary"></i>
+                        <i class="fas fa-barcode fa-2x text-primary"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% else %}
+    <div class="card">
+        <div class="card-body text-center py-5">
+            <i class="fas fa-shopping-cart fa-5x text-muted mb-4"></i>
+            <h3>Seu carrinho está vazio</h3>
+            <p class="mb-4">Adicione produtos ao seu carrinho para continuar.</p>
+            <a href="{% url 'catalogo' %}" class="btn btn-primary btn-lg">
+                <i class="fas fa-shopping-bag me-2"></i>Ir para o Catálogo
+            </a>
+        </div>
+    </div>
+{% endif %}
+{% endblock %}
