@@ -1,6 +1,7 @@
 from django.db import models
 from django.urls import reverse
 from django.utils.text import slugify
+from cloudinary.models import CloudinaryField
 import uuid
 
 class Categoria(models.Model):
@@ -29,7 +30,7 @@ class Peca(models.Model):
     descricao = models.TextField()
     aplicacao = models.TextField(blank=True, null=True)
     preco = models.DecimalField(max_digits=10, decimal_places=2)    
-    imagem = models.ImageField(upload_to='pecas/', blank=True, null=True)
+    imagem = CloudinaryField('imagem', blank=True, null=True)
     destaque = models.BooleanField(default=False)
     data_cadastro = models.DateTimeField(auto_now_add=True)
     
