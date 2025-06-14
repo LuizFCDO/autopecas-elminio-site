@@ -4,3 +4,7 @@ Banco de Dados = postgreSQL
 usuario = postgres
 senha = 990831@_L17
 port = 5432
+
+super user Render
+user = admin
+senha = 990831
